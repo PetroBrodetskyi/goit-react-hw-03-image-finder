@@ -1,5 +1,7 @@
 # React homework template
 
+Pixabay API Your API key: 39760992-bd564f72a97718cc10783b18b
+
 Этот проект был создан при помощи
 [Create React App](https://github.com/facebook/create-react-app). Для знакомства
 и настройки дополнительных возможностей
