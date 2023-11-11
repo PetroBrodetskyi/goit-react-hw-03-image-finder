@@ -1,0 +1,8 @@
+.loader {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 180px;
+}
