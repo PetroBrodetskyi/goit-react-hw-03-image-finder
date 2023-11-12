@@ -1,4 +1,3 @@
-// App.jsx
 import React, { Component } from 'react';
 import { fetchImages } from './servises/api';
 import Searchbar from './Searchbar/Searchbar';
@@ -7,6 +6,8 @@ import ImageGallery from './ImageGallery/ImageGallery';
 import Button from './Button/Button';
 import animateScroll from 'react-scroll';
 import Modal from './Modal/Modal';
+import { Notify } from 'notiflix';
+
 
 class App extends Component {
   state = {
@@ -30,22 +31,33 @@ class App extends Component {
   }
 
   getImages = async (query, page) => {
-    this.setState({ isLoading: true });
-    if (!query) {
+  this.setState({ isLoading: true });
+  if (!query) {
+    return;
+  }
+  try {
+    const { hits, totalHits } = await fetchImages(query, page);
+
+    if (hits.length === 0) {
+      Notify.failure('Зображення не знайдено. Спробуйте інший запит.', {
+        position: 'center-bottom',
+        timeout: 5000,
+        width: '290px',
+        fontSize: '18px'
+      });
       return;
     }
-    try {
-      const { hits, totalHits } = await fetchImages(query, page);
-      this.setState((prevState) => ({
-        images: [...prevState.images, ...hits],
-        loadMore: page < Math.ceil(totalHits / this.state.per_page),
-      }));
-    } catch (error) {
-      this.setState({ error: error.message });
-    } finally {
-      this.setState({ isLoading: false });
-    }
-  };
+
+    this.setState((prevState) => ({
+      images: [...prevState.images, ...hits],
+      loadMore: page < Math.ceil(totalHits / this.state.per_page),
+    }));
+  } catch (error) {
+    this.setState({ error: error.message });
+  } finally {
+    this.setState({ isLoading: false });
+  }
+};
 
   formSubmit = (searchQuery) => {
     this.setState({
@@ -95,7 +107,8 @@ class App extends Component {
           <ImageGallery images={images} openModal={this.openModal} />
         )}
 
-        {loadMore && <Button onloadMore={this.onloadMore} page={page} />}
+        {loadMore && !isLoading && (<Button onloadMore={this.onloadMore} page={page} />
+)}
 
         {showModal && (
           <Modal largeImageURL={largeImageURL} onClose={this.closeModal} />
