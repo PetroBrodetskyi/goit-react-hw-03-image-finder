@@ -9,6 +9,7 @@ import Modal from './Modal/Modal';
 import { Notify } from 'notiflix';
 
 
+
 class App extends Component {
   state = {
     searchQuery: '',
@@ -108,10 +109,13 @@ class App extends Component {
         )}
 
         {loadMore && !isLoading && (<Button onloadMore={this.onloadMore} page={page} />
-)}
-
+        )}
         {showModal && (
-          <Modal largeImageURL={largeImageURL} onClose={this.closeModal} />
+          <Modal
+            isOpen={showModal}
+            onClose={this.closeModal}
+            largeImageURL={largeImageURL}
+          />
         )}
       </>
     );
