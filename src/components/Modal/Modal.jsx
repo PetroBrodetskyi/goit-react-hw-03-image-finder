@@ -5,8 +5,7 @@ import css from './Modal.module.css';
 
 
 
-
-class ModalComponent extends Component {
+class ModalWindow extends Component {
   handleKeyDown = (e) => {
     if (e.code === 'Escape') {
       this.props.onClose();
@@ -35,9 +34,9 @@ class ModalComponent extends Component {
         
         <div className={css.overlay} onClick={this.handleBackDropClick}>
           <div className={css.modal}>
-            <img src={this.props.largeImageURL} alt="" />
+            <img className={css.imagemodal} src={this.props.largeImageURL} alt="" />
             <button className={css.closeButton} onClick={this.props.onClose}>
-              <AiOutlineClose size={20} />
+              <AiOutlineClose size={22} />
             </button>
           </div>
         </div>
@@ -46,4 +45,4 @@ class ModalComponent extends Component {
   }
 }
 
-export default ModalComponent;
+export default ModalWindow;

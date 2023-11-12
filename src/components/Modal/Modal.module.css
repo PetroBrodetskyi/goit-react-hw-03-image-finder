@@ -8,19 +8,21 @@
   justify-content: center;
   align-items: center;
   background: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
 }
 
 .modal {
-  max-width: 96%;
-  max-height: 96%;
+  max-width: 100%;
+  max-height: 100%;
   position: relative;
   overflow: hidden;
   z-index: 1000;
 }
 
-.modal img {
-  width: 100%;
-  object-fit: scale-down;
+.imagemodal {
+  max-width: 900px;
+  height: auto;
+  object-fit: cover;
 }
 
 .closeButton {
@@ -31,6 +33,6 @@
   border: none;
   cursor: pointer;
   color: #fff;
-  font-size: 24px;
+  font-size: 22px;
   outline: none;
 }

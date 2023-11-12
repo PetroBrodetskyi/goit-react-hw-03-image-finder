@@ -20,6 +20,7 @@ class App extends Component {
     loadMore: false,
     error: null,
     showModal: false,
+    isModalOpen: false,
     largeImageURL: 'largeImageURL',
     id: null,
   };
@@ -61,13 +62,17 @@ class App extends Component {
 };
 
   formSubmit = (searchQuery) => {
+  const trimmedQuery = searchQuery.trim();
+
+  if (trimmedQuery && trimmedQuery !== this.state.searchQuery) {
     this.setState({
-      searchQuery,
+      searchQuery: trimmedQuery,
       images: [],
       page: 1,
       loadMore: false,
     });
-  };
+  }
+};
 
   onloadMore = () => {
   this.setState((prevState) => ({ page: prevState.page + 1 }));
@@ -79,24 +84,28 @@ class App extends Component {
 };
 
   openModal = (largeImageURL) => {
+  if (!this.state.showModal) {
     this.setState({
       showModal: true,
       largeImageURL: largeImageURL,
+      isModalOpen: true,
     });
-  };
+  }
+};
 
   closeModal = () => {
-    this.setState({
-      showModal: false,
-    });
-  };
+  this.setState({
+    showModal: false,
+    isModalOpen: false,
+  });
+};
 
   render() {
-    const { images, isLoading, loadMore, page, showModal, largeImageURL } =
+    const { images, isLoading, loadMore, page, showModal, largeImageURL, isModalOpen } =
       this.state;
     return (
       <>
-        <Searchbar onSubmit={this.formSubmit} />
+        {!isModalOpen && <Searchbar onSubmit={this.formSubmit} />}
 
         {isLoading ? (
           <Loader />
